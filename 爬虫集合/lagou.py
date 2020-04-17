@@ -9,11 +9,11 @@ import pymysql.cursors
 def get_conn():
     '''建立数据库连接'''
     conn = pymysql.connect(host='localhost',
-                                user='root',
-                                password='root',
-                                db='python',
-                                charset='utf8mb4',
-                                cursorclass=pymysql.cursors.DictCursor)
+                           user='root',
+                           password='root',
+                           db='python',
+                           charset='utf8mb4',
+                           cursorclass=pymysql.cursors.DictCursor)
     return conn
 
 
@@ -63,12 +63,12 @@ def main():
     lang_name = 'python'
     wb = Workbook()  # 打开 excel 工作簿
     conn = get_conn()  # 建立数据库连接  不存数据库 注释此行
-    for i in ['北京', '上海', '广州', '深圳', '杭州']:   # 五个城市
+    for i in ['北京', '上海', '广州', '深圳', '杭州']:  # 五个城市
         page = 1
         ws1 = wb.active
         ws1.title = lang_name
         url = 'https://www.lagou.com/jobs/positionAjax.json?city={}&needAddtionalResult=false'.format(i)
-        while page < 31:   # 每个城市30页信息
+        while page < 31:  # 每个城市30页信息
             info = get_json(url, page, lang_name)
             page += 1
             print(i, 'page', page)
@@ -78,6 +78,7 @@ def main():
                 ws1.append(row)
     conn.close()  # 关闭数据库连接，不存数据库 注释此行
     wb.save('{}职位信息.xlsx'.format(lang_name))
+
 
 if __name__ == '__main__':
     main()
